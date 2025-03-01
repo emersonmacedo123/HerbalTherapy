@@ -1,10 +1,21 @@
 <template>
-  <nav>
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
-  </nav>
-  <router-view />
+  <div>
+    <BarraNavBar />
+    <router-view />
+    <Footer />
+  </div>
 </template>
+
+<script>
+import BarraNavBar from './components/BarraNavBar.vue';
+import Footer from './components/FooterBar.vue';
+export default {
+  components: {
+    BarraNavBar, 
+    Footer
+  }
+}
+</script>
 
 <style>
 #app {
