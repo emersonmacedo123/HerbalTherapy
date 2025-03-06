@@ -18,10 +18,10 @@ const routes = [{
             import ( /* webpackChunkName: "about" */ "../views/AboutView.vue"),
     },
     {
-        path: "/homepage",
-        name: "homepage",
+        path: "/ServicosOferecidos",
+        name: "ServicosOferecidos",
         component: () =>
-            import ( /* webpackChunkName: "homepage" */ "../views/HomeViewNew.vue"),
+            import ( /* webpackChunkName: "homepage" */ "../views/ServicosOferecidos.vue"),
     },
     {
         path: "/login",
@@ -34,6 +34,36 @@ const routes = [{
         name: "registration",
         component: () =>
             import ( /* webpackChunkName: "registration" */ "../views/RegistrationPage.vue"),
+    },
+    {
+        path: "/loggedHome",
+        name: "loggedHome",
+        component: () =>
+            import ( /* webpackChunkName: "loggedHome" */ "../views/LoggedInHome.vue"),
+    },
+    {
+        path: "/schedule",
+        name: "schedule",
+        component: () =>
+            import ( /* webpackChunkName: "schedule" */ "../views/AgendarConsulta.vue"),
+    },
+    {
+        path: "/history",
+        name: "history",
+        component: () =>
+            import ( /* webpackChunkName: "history" */ "../views/ConsultasHistorico.vue"),
+    },
+    {
+        path: "/agendamentos",
+        name: "ConsultasAgendadas",
+        component: () =>
+            import ( /* webpackChunkName: "agendamentos" */ "../views/ConsultasAgendadas.vue"),
+    },
+    {
+        path: "/perfilcliente",
+        name: "perfilcliente",
+        component: () =>
+            import ( /* webpackChunkName: "perfilcliente" */ "../views/ClientePerfil.vue"),
     }
 ];
 
