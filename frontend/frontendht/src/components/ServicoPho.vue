@@ -1,24 +1,24 @@
 <template>
     <div class="service-container">
-      <h2>Terapia com Camomila</h2>
+      <h2>Terapia com Gou Teng</h2>
       <div class="service-content">
         <div class="service-image">
-          <img src="../assets/camomile.jpeg" alt="Camomila" />
+          <img src="../assets/Gouteng.jpeg" alt="Gou Teng" />
         </div>
         <div class="service-description">
           <p>
-            A camomila é uma planta medicinal conhecida por suas propriedades
-            calmantes e anti-inflamatórias. Nossa terapia com camomila oferece
-            diversos benefícios para sua saúde:
+            Gou Teng, também conhecida como Uncaria, é uma erva tradicional chinesa
+            valorizada por suas propriedades calmantes e de suporte cardiovascular.
+            Nossa terapia com Gou Teng oferece diversos benefícios:
           </p>
           <ul>
-            <li>Alívio de ansiedade</li>
-            <li>Melhora da insônia</li>
-            <li>Alívio de problemas digestivos</li>
-            <li>Redução da inflamação</li>
-            <li>Promoção do relaxamento</li>
+            <li>Alívio da dor de cabeça e enxaqueca</li>
+            <li>Redução da pressão arterial</li>
+            <li>Alívio de espasmos e convulsões</li>
+            <li>Promoção da calma e relaxamento</li>
+            <li>Melhora da qualidade do sono</li>
           </ul>
-          <p class="price">Valor da sessão: R$ 70,00</p>
+          <p class="price">Valor da sessão: R$ 85,00</p>
           <button @click="agendarServico">Agendar Serviço</button>
         </div>
       </div>
@@ -27,7 +27,7 @@
   
   <script>
   export default {
-    name: "ServicoCamomila",
+    name: "ServicoGouTeng",
     methods: {
       agendarServico() {
         // Implementar lógica de agendamento

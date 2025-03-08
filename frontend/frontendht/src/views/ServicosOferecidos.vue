@@ -1,19 +1,33 @@
 <template>
   <div class="services">
     <h1>Nossos Serviços</h1>
+    <ServicoFitoterapia />
     <ServicoCamomila />
-    
+    <ServicoGengibre />
+    <ServicoPho />
+    <ServicoAngelica />
+    <EssentialLinksHome />
     
   </div>
 </template>
 
 <script>
 import ServicoCamomila from '../components/ServicoCamomila.vue'
+import ServicoGengibre from '../components/ServicoGengibre.vue'
+import ServicoPho from '../components/ServicoPho.vue'
+import ServicoAngelica from '@/components/ServicoAngelica.vue'
+import ServicoFitoterapia from '@/components/ServicoFitoterapia.vue'
+import EssentialLinksHome from "@/components/EssentialLinksHome.vue";
 
 export default {
   name: 'ServicosOferecidos',
   components: {
-    ServicoCamomila
+    ServicoCamomila,
+    ServicoGengibre,
+    ServicoPho,
+    ServicoAngelica,
+    ServicoFitoterapia,
+    EssentialLinksHome
   }
 }
 </script>

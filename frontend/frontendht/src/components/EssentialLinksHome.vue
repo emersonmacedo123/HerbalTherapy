@@ -6,7 +6,7 @@
             <span class="separator">/</span>
             <router-link to="/registration" class="nav-link">Cadastrar</router-link>
             <span class="separator">/</span>
-            <router-link to="/detalhes" class="nav-link">Conhecer detalhes</router-link>
+            <router-link to="/servicosoferecidos" class="nav-link">Nossos serviços</router-link>
         </div>
 
         <!-- Social media icons -->

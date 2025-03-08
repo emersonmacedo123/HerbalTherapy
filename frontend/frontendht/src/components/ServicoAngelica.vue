@@ -1,24 +1,24 @@
 <template>
     <div class="service-container">
-      <h2>Terapia com Camomila</h2>
+      <h2>Terapia com Angélica</h2>
       <div class="service-content">
         <div class="service-image">
-          <img src="../assets/camomile.jpeg" alt="Camomila" />
+          <img src="../assets/angelica.jpeg" alt="Angélica" />
         </div>
         <div class="service-description">
           <p>
-            A camomila é uma planta medicinal conhecida por suas propriedades
-            calmantes e anti-inflamatórias. Nossa terapia com camomila oferece
-            diversos benefícios para sua saúde:
+            A Angélica é uma planta medicinal conhecida por suas propriedades
+            revigorantes e de suporte digestivo. Nossa terapia com Angélica
+            oferece diversos benefícios:
           </p>
           <ul>
-            <li>Alívio de ansiedade</li>
-            <li>Melhora da insônia</li>
             <li>Alívio de problemas digestivos</li>
-            <li>Redução da inflamação</li>
-            <li>Promoção do relaxamento</li>
+            <li>Aumento da energia e vitalidade</li>
+            <li>Alívio de cólicas menstruais</li>
+            <li>Fortalecimento do sistema imunológico</li>
+            <li>Ação antioxidante</li>
           </ul>
-          <p class="price">Valor da sessão: R$ 70,00</p>
+          <p class="price">Valor da sessão: R$ 75,00</p>
           <button @click="agendarServico">Agendar Serviço</button>
         </div>
       </div>
@@ -27,7 +27,7 @@
   
   <script>
   export default {
-    name: "ServicoCamomila",
+    name: "ServicoAngelica",
     methods: {
       agendarServico() {
         // Implementar lógica de agendamento

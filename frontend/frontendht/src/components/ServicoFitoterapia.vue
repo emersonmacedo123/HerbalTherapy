@@ -1,24 +1,31 @@
 <template>
     <div class="service-container">
-      <h2>Terapia com Camomila</h2>
+      <h2>Terapia com Fitoterapia</h2>
       <div class="service-content">
         <div class="service-image">
-          <img src="../assets/camomile.jpeg" alt="Camomila" />
+          <img src="../assets/fitoterapia.jpg" alt="Fitoterapia" />
         </div>
         <div class="service-description">
-          <p>
-            A camomila é uma planta medicinal conhecida por suas propriedades
-            calmantes e anti-inflamatórias. Nossa terapia com camomila oferece
-            diversos benefícios para sua saúde:
+          <p class="intro">
+            A <strong>Fitoterapia</strong> é uma prática terapêutica milenar que utiliza
+            plantas medicinais para prevenir e tratar diversas condições de saúde.
+            Baseada no conhecimento tradicional e em evidências científicas, a
+            fitoterapia oferece uma abordagem natural e integrativa para o bem-estar.
           </p>
+          <p>
+            Nossa terapia com Fitoterapia oferece uma avaliação completa e
+            individualizada, com a seleção das plantas mais adequadas para suas
+            necessidades.
+          </p>
+          <h3>Benefícios da Fitoterapia:</h3>
           <ul>
-            <li>Alívio de ansiedade</li>
-            <li>Melhora da insônia</li>
-            <li>Alívio de problemas digestivos</li>
-            <li>Redução da inflamação</li>
-            <li>Promoção do relaxamento</li>
+            <li>Tratamento de diversas condições de saúde</li>
+            <li>Fortalecimento do sistema imunológico</li>
+            <li>Redução dos efeitos colaterais de medicamentos</li>
+            <li>Promoção do bem-estar geral</li>
+            <li>Abordagem natural e integrativa</li>
           </ul>
-          <p class="price">Valor da sessão: R$ 70,00</p>
+          <p class="price">Valor da sessão: R$ 90,00</p>
           <button @click="agendarServico">Agendar Serviço</button>
         </div>
       </div>
@@ -27,7 +34,7 @@
   
   <script>
   export default {
-    name: "ServicoCamomila",
+    name: "ServicoFitoterapia",
     methods: {
       agendarServico() {
         // Implementar lógica de agendamento
@@ -69,6 +76,12 @@
     margin-bottom: 20px;
   }
   
+  h3 {
+    color: #2c3e50;
+    margin-top: 20px;
+    margin-bottom: 10px;
+  }
+  
   ul {
     list-style-type: disc;
     margin-left: 20px;
@@ -93,6 +106,17 @@
   
   button:hover {
     background-color: #3aa876;
+  }
+  
+  .intro {
+    font-size: 1.1em;
+    line-height: 1.6;
+    margin-bottom: 15px;
+  }
+  
+  .intro strong {
+    font-weight: bold;
+    color: #34495e;
   }
   
   @media (max-width: 768px) {
