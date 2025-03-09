@@ -1,17 +1,20 @@
-// Exemplo de userRoutes.js
 const express = require('express');
 const router = express.Router();
-const User = require('../models/User');
+const userController = require('../controllers/userController');
 
-router.get('/', async(req, res) => {
-    try {
-        const users = await User.find();
-        res.json(users);
-    } catch (err) {
-        res.status(500).json({ message: err.message });
-    }
-});
+// Rota para criar um novo usuário
+router.post('/', userController.createUser);
 
-// ... outras rotas
+// Rota para obter todos os usuários
+router.get('/', userController.getAllUsers);
+
+// Rota para obter um usuário por ID
+router.get('/:id', userController.getUserById);
+
+// Rota para atualizar um usuário por ID
+router.put('/:id', userController.updateUser);
+
+// Rota para excluir um usuário por ID
+router.delete('/:id', userController.deleteUser);
 
 module.exports = router;

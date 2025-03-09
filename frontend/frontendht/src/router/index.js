@@ -64,6 +64,12 @@ const routes = [{
         name: "perfilcliente",
         component: () =>
             import ( /* webpackChunkName: "perfilcliente" */ "../views/ClientePerfil.vue"),
+    },
+    {
+        path: "/admin/users",
+        name: "AdminView",
+        component: () =>
+            import ( /* webpackChunkName: "adminUsers" */ "../views/AdminViewUsers.vue"),
     }
 ];
 
