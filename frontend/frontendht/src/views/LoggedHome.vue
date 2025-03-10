@@ -22,7 +22,7 @@
 
 <script>
 export default {
-    name: 'LoggedInHome',
+    name: 'LoggedHome',
     methods: {
         goToSchedule() {
             this.$router.push('/schedule')

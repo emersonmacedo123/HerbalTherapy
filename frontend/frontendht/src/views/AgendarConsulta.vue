@@ -77,7 +77,7 @@ export default {
             this.voltarHome()
         },
         voltarHome() {
-            this.$router.push('/loggedInHome')
+            this.$router.push('/loggedHome')
         }
     }
 }

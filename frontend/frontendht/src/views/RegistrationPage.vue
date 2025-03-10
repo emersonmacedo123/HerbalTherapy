@@ -51,7 +51,7 @@
                     required
                     >
                 </div>
-                <button type="submit" class="submit-btn">Registrar</button>
+                <button @click="registerUser()" type="submit" class="submit-btn">Registrar</button>
                 
         <router-link to="/login" class="login-btn">Login</router-link>
         
@@ -61,25 +61,28 @@
 </template>
 
 <script>
+import userService from '@/services/userService';
+
 export default {
     name: 'RegistrationPage',
     data() {
-        return {
-            formData: {
-                fullName: '',
-                email: '',
-                phone: '',
-                address: '',
-                password: ''
-            }
-        }
-    },
+    return {
+      formData: {
+        name: '',
+        email: '',
+        phone: '',
+        address: '',
+        age: null,
+        password: ''
+      }
+    }
+  },
     methods: {
         async registerUser() {
             try {
-                // Aqui você implementará a lógica para enviar os dados para o backend
-                console.log('Dados do formulário:', this.formData)
-                // TODO: Adicionar chamada API para registrar usuário
+                const response = await userService.createUser(this.formData)
+                console.log("Usuário registrado com sucesso:", response.data)
+                this.$router.push('/login');
             } catch (error) {
                 console.error('Erro ao registrar:', error)
             }

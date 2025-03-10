@@ -2,6 +2,8 @@ import { createRouter, createWebHistory } from "vue-router";
 import HomeView from "../views/HomeView.vue";
 import LoginPage from "../views/LoginPage.vue";
 import RegistrationPage from "@/views/RegistrationPage.vue";
+import store from '../store';
+
 
 const routes = [{
         path: "/",
@@ -39,7 +41,8 @@ const routes = [{
         path: "/loggedHome",
         name: "loggedHome",
         component: () =>
-            import ( /* webpackChunkName: "loggedHome" */ "../views/LoggedInHome.vue"),
+            import ( /* webpackChunkName: "loggedHome" */ "../views/LoggedHome.vue"),
+        meta: { requiresAuth: true }
     },
     {
         path: "/schedule",
@@ -70,12 +73,27 @@ const routes = [{
         name: "AdminView",
         component: () =>
             import ( /* webpackChunkName: "adminUsers" */ "../views/AdminViewUsers.vue"),
+    },
+    {
+        path: "/admin/schedules",
     }
 ];
 
 const router = createRouter({
     history: createWebHistory(process.env.BASE_URL),
     routes,
+});
+
+router.beforeEach((to, from, next) => {
+    if (to.matched.some(record => record.meta.requiresAuth)) {
+        if (!store.getters.isAuthenticated) {
+            next('/login');
+        } else {
+            next();
+        }
+    } else {
+        next();
+    }
 });
 
 export default router;

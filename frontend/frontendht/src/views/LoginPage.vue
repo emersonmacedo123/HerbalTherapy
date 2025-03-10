@@ -10,7 +10,6 @@
                         id="email" 
                         v-model="email" 
                         required 
-                        placeholder="Enter your email"
                     >
                 </div>
                 <div class="form-group">
@@ -20,33 +19,50 @@
                         id="password" 
                         v-model="password" 
                         required 
-                        placeholder="Enter your password"
                     >
                 </div>
-                <button type="submit" class="login-btn">Sign In</button>
+                <div v-if="error" class="error-message">
+                    {{ error }}
+                </div>
+                <button type="submit" class="login-btn">Login</button>
             </form>
-            <!-- Adicionado aqui dentro do template -->
             <div class="register-link">
-                <button @click="$router.push('/registration')" class="register-btn">Cadastrar</button>
+                <router-link to="/registration" class="register-btn">Cadastrar</router-link>
             </div>
         </div>
     </div>
 </template>
 
-
 <script>
+import { mapActions } from 'vuex';
+
 export default {
     name: 'LoginPage',
     data() {
         return {
             email: '',
-            password: ''
+            password: '',
+            error: null
         }
     },
     methods: {
-        handleLogin() {
-            // Add your login logic here
-            console.log('Login attempt:', { email: this.email, password: this.password })
+        ...mapActions(['login']),
+        async handleLogin() {
+            try {
+                const success = await this.login({
+                    email: this.email,
+                    password: this.password
+                });
+
+                if (success) {
+                    this.$router.push('/loggedHome');
+                } else {
+                    this.error = 'Login falhou. Verifique suas credenciais.';
+                }
+            } catch (error) {
+                this.error = 'Erro ao fazer login. Tente novamente.';
+                console.error('Login error:', error);
+            }
         }
     }
 }
