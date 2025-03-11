@@ -3,6 +3,8 @@ const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const cors = require('cors');
 const userRoutes = require('./routes/userRoutes');
+const authRoutes = require('./routes/authRoutes');
+
 
 dotenv.config();
 
@@ -27,4 +29,5 @@ app.listen(port, () => {
 app.get('/', (req, res) => {
     res.send('Bem-vindo ao Backend da Herbal Therapy!');
 });
-app.use('/api/users', userRoutes); // Changed to /api/users
+app.use('/api/auth', authRoutes);
+app.use('/api/users', userRoutes);

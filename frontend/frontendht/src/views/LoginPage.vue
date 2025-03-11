@@ -55,7 +55,7 @@ export default {
                 });
 
                 if (success) {
-                    this.$router.push('/loggedHome');
+                    this.$router.push('/home');
                 } else {
                     this.error = 'Login falhou. Verifique suas credenciais.';
                 }
@@ -70,12 +70,12 @@ export default {
 
 <style scoped>
 .login-container {
-    min-height: 100vh; /* alterado de height para min-height */
+    min-height: 100vh; 
     display: flex;
     justify-content: center;
     align-items: center;
     background-color: #f5f5f5;
-    padding: 20px 0; /* adicionado padding para evitar que o conteúdo toque as bordas */
+    padding: 20px 0; 
 }
 
 .login-box {

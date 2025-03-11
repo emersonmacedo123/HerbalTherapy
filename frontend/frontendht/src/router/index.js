@@ -7,7 +7,7 @@ import store from '../store';
 
 const routes = [{
         path: "/",
-        name: "home",
+        name: "frontPage",
         component: HomeView,
     },
     {
@@ -38,7 +38,7 @@ const routes = [{
             import ( /* webpackChunkName: "registration" */ "../views/RegistrationPage.vue"),
     },
     {
-        path: "/loggedHome",
+        path: "/home",
         name: "loggedHome",
         component: () =>
             import ( /* webpackChunkName: "loggedHome" */ "../views/LoggedHome.vue"),
@@ -73,9 +73,21 @@ const routes = [{
         name: "AdminView",
         component: () =>
             import ( /* webpackChunkName: "adminUsers" */ "../views/AdminViewUsers.vue"),
+        meta: { requiresAuth: true, requiresAdmin: true }
     },
     {
-        path: "/admin/schedules",
+        path: "/admin/home",
+        name: "AdminHome",
+        component: () =>
+            import ( /* webpackChunkName: "adminHome" */ "../views/AdminLoggedHome.vue"),
+        meta: { requiresAuth: true, requiresAdmin: true }
+    },
+    {
+        path: "/admin/users/edit/:id",
+        name: "AdminEditUser",
+        component: () =>
+            import ("../views/AdminEditUser.vue"),
+        meta: { requiresAuth: true, requiresAdmin: true }
     }
 ];
 
@@ -88,6 +100,8 @@ router.beforeEach((to, from, next) => {
     if (to.matched.some(record => record.meta.requiresAuth)) {
         if (!store.getters.isAuthenticated) {
             next('/login');
+        } else if (to.matched.some(record => record.meta.requiresAdmin) && !store.getters.isAdmin) {
+            next('/'); // Redirect non-admin users to home
         } else {
             next();
         }

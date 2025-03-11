@@ -1,6 +1,8 @@
 <template>
     <div class="logged-home">
-        <h1>Bem-vindo(a)</h1>
+        <h1>Area do Cliente</h1>
+
+        <!-- User Section -->
         <div class="options-container">
             <div class="option-card" @click="goToSchedule">
                 <i class="fas fa-calendar-plus"></i>
@@ -17,13 +19,44 @@
                 <h2>Meu Perfil</h2>
             </div>
         </div>
+        
+        <!-- Admin Section -->
+        <template v-if="isAdmin">
+            <div class="admin-section">
+                <h1>Área exclusiva do Admin</h1>
+                <div class="options-container">
+                    <div class="option-card" @click="goToAgendamentos">
+                        <i class="fas fa-calendar-alt"></i>
+                        <h2>Todos os Agendamentos</h2>
+                    </div>
+
+                    <div class="option-card" @click="goToHistorico">
+                        <i class="fas fa-history"></i>
+                        <h2>Histórico de Consultas</h2>
+                    </div>
+
+                    <div class="option-card" @click="goToUsers">
+                        <i class="fas fa-users-cog"></i>
+                        <h2>Gestão de Usuários</h2>
+                    </div>
+                </div>
+            </div>
+        </template>
+
+        
     </div>
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
+
 export default {
     name: 'LoggedHome',
+    computed: {
+        ...mapGetters(['isAdmin'])
+    },
     methods: {
+        // Existing methods
         goToSchedule() {
             this.$router.push('/schedule')
         },
@@ -31,13 +64,35 @@ export default {
             this.$router.push('/history')
         },
         goToProfile() {
-            this.$router.push('/profile')
+            this.$router.push('/perfilcliente')
+        },
+        // Admin methods
+        goToAgendamentos() {
+            this.$router.push('/agendamentos')
+        },
+        goToHistorico() {
+            this.$router.push('/history')
+        },
+        goToUsers() {
+            this.$router.push('/admin/users')
         }
     }
 }
 </script>
 
 <style scoped>
+
+.admin-section {
+    margin-bottom: 3rem;
+    padding: 2rem;
+    border-radius: 10px;
+}
+
+.admin-section h2 {
+    color: #2c3e50;
+    margin-bottom: 2rem;
+}
+
 .logged-home {
     padding: 2rem;
     text-align: center;

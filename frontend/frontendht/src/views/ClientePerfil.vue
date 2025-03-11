@@ -54,6 +54,9 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from 'vuex';
+import userService from '@/services/userService';
+
 export default {
     name: 'ClientePerfil',
     data() {
@@ -61,34 +64,77 @@ export default {
             isEditing: false,
             showPassword: false,
             profile: {
-                fullName: 'João Silva',
-                email: 'joao@email.com',
-                phone: '(11) 99999-9999',
-                address: 'Rua Example, 123',
-                password: '********'
-            }
+                fullName: '',
+                email: '',
+                phone: '',
+                address: '',
+                age: null,
+            },
+            message: null
         }
     },
+    computed:
+    {
+        ...mapGetters(['currentUser'])
+    },
+    async created() {
+        try{
+            if(this.currentUser){
+                const userData = await userService.getUserById(this.currentUser.id);
+                this.profile = { ...userData};
+            }
+
+        } catch (error) {
+            console.error('Error loading profile:', error);
+            this.message = {
+                type: 'error', 
+                text: 'Erro ao carregar perfil'
+            };
+        } finally {
+            this.loading = false;
+        }
+    }, 
     methods: {
         toggleEdit() {
-            this.isEditing = !this.isEditing
+            if (this.isEditing) {
+                // Reset form if canceling
+                this.loadUserData();
+            }
+            this.isEditing = !this.isEditing;
+            this.message = null;
         },
-        togglePassword() {
-            this.showPassword = !this.showPassword
+        async saveChanges() {
+            try {
+                await userService.updateUser(this.profile);
+                this.message = {
+                    type: 'success',
+                    text: 'Perfil atualizado com sucesso!'
+                };
+                this.isEditing = false;
+            } catch (error) {
+                console.error('Error saving profile:', error);
+                this.message = {
+                    type: 'error',
+                    text: 'Erro ao atualizar perfil'
+                };
+            }
         },
-        saveChanges() {
-            // Aqui você implementaria a lógica para salvar as alterações
-            this.isEditing = false
-            alert('Alterações salvas com sucesso!')
+        async loadUserData() {
+            if (this.currentUser) {
+                const userData = await userService.getUserById(this.currentUser.id);
+                this.profile = { ...userData };
+            }
         },
         goBack() {
-            this.$router.go(-1)
+            this.$router.push('/home');
         }
+
     }
 }
 </script>
 
 <style scoped>
+
 .client-profile {
     max-width: 600px;
     margin: 0 auto;
@@ -156,5 +202,28 @@ button {
 .back-btn {
     background-color: #607D8B;
     color: white;
+}
+
+.alert {
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 4px;
+}
+
+.success {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+.error {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+.loading {
+    text-align: center;
+    padding: 20px;
 }
 </style>

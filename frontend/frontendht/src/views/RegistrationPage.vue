@@ -51,7 +51,7 @@
                     required
                     >
                 </div>
-                <button @click="registerUser()" type="submit" class="submit-btn">Registrar</button>
+                <button type="submit" class="submit-btn">Registrar</button>
                 
         <router-link to="/login" class="login-btn">Login</router-link>
         

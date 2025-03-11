@@ -22,9 +22,13 @@
                       <td>{{ user.address }}</td>
                       <td>{{ user.age }}</td>
                       <td>
-                          <button @click="confirmDelete(user)" class="delete-btn">
-                              Deletar
-                          </button>
+                        <button @click="editUser(user)" class="edit-btn">
+                            Editar
+                        </button>
+                        <button @click="confirmDelete(user)" class="delete-btn">
+                            Deletar
+                        </button>
+                          
                       </td>
                   </tr>
               </tbody>
@@ -68,6 +72,9 @@ export default {
       }
   },
   methods: {
+    async editUser(user) {
+        this.$router.push(`/admin/users/edit/${user._id}`);
+    },
       confirmDelete(user) {
           this.selectedUser = user;
           this.showConfirmModal = true;
@@ -86,6 +93,25 @@ export default {
 </script>
 
 <style scoped>
+
+.actions {
+    display: flex;
+    gap: 8px;
+}
+
+.edit-btn {
+    background-color: #2196F3;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.edit-btn:hover {
+    background-color: #1976D2;
+}
+
 .admin-view {
   padding: 20px;
 }

@@ -3,7 +3,11 @@ const User = require('../models/User');
 // Função para criar um novo usuário
 exports.createUser = async(req, res) => {
     try {
-        const user = new User(req.body);
+        const userData = {
+            ...req.body,
+            isAdmin: false // Garante que novos usuários não são admin por padrão
+        };
+        const user = new User(userData);
         await user.save();
         res.status(201).json(user);
     } catch (err) {

@@ -25,7 +25,7 @@ export default {
 
     async updateUser(userData) {
         try {
-            const response = await axios.put(`${API_URL}/users/${userData.id}`, userData);
+            const response = await axios.put(`${API_URL}/users/${userData._id}`, userData);
             return response.data;
         } catch (error) {
             console.error('Error updating user:', error);
@@ -41,5 +41,15 @@ export default {
             console.error('Error deleting user:', error);
             throw error;
         }
-    }
+    },
+
+    async getUserById(userId) {
+        try {
+            const response = await axios.get(`${API_URL}/users/${userId}`);
+            return response.data;
+        } catch (error) {
+            console.error('Error getting user:', error);
+            throw error;
+        }
+    },
 };
