@@ -1,6 +1,11 @@
 <template>
     <div class="consultas-agendadas">
         <h2>Consultas Agendadas</h2>
+        <div v-if="loading" class="loading">Carregando...</div>
+        <div v-else-if="error" class="error">{{ error }}</div>
+        <div v-else-if="consultas.length === 0" class="no-data">
+            Você não possui consultas agendadas.
+        </div>
         <table class="consultas-table">
             <thead>
                 <tr>
@@ -29,31 +34,52 @@
 </template>
 
 <script>
+import appointmentService from '@/services/appointmentService';
+import {mapGetters} from 'vuex';
+
 export default {
     name: 'ConsultasAgendadas',
     data() {
         return {
-            consultas: [
-                // Dados de exemplo - substituir pela integração com API
-                {
-                    id: 1,
-                    dataHora: '2023-12-20T14:30:00',
-                    clinica: 'Clínica Exemplo',
-                    especialidade: 'Acupuntura',
-                    duracao: 60
-                }
-            ]
+            consultas: [],
+            loading: true,
+            error: null
+        }
+    },
+    computed: 
+    {
+        ...mapGetters(['currentUser'])
+    },
+    async created()
+    {
+        try
+        {
+            if(this.currentUser){
+                this.consultas = await appointmentService.getUserAppointments(this.currentUser.id);
+            }
+        } catch (error)
+        {
+            console.error('Erro ao coletar consultas agendadas', error);
+            this. error = 'Erro ao coletar consultas';
+        }
+        finally 
+        {
+            this.loading = false;
         }
     },
     methods: {
         formatDateTime(dateTime) {
             return new Date(dateTime).toLocaleString('pt-BR')
         },
-        cancelarConsulta(id) {
-            // Implementar lógica de cancelamento
+        async cancelarConsulta(id) {
             if (confirm('Deseja realmente cancelar esta consulta?')) {
-                // Chamar API para cancelar
-                console.log('Cancelando consulta:', id)
+                try {
+                    await appointmentService.cancelAppointment(id);
+                    this.consultas = this.consultas.filter(consulta => consulta._id !== id);
+                } catch (error) {
+                    console.error('Erro ao cancelar consulta:', error);
+                    alert('Erro ao cancelar consulta. Tente novamente.');
+                }
             }
         }
     }
@@ -93,5 +119,15 @@ export default {
 
 .btn-cancelar:hover {
     background-color: #cc0000;
+}
+
+.loading, .error, .no-data {
+    text-align: center;
+    padding: 20px;
+    color: #666;
+}
+
+.error {
+    color: #ff4444;
 }
 </style>

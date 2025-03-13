@@ -2,15 +2,19 @@
     <div class="agendar-consulta">
         <h2>Agendar Nova Consulta</h2>
         
+        <div v-if="error" class="error-message">
+            {{ error }}
+        </div>
+
         <form @submit.prevent="agendarConsulta" class="form-consulta">
             <div class="form-group">
                 <label>Data e Horário:</label>
-                <input type="datetime-local" v-model="consulta.dataHora" required>
+                <input type="datetime-local" v-model="appointmentData.dataHora" required>
             </div>
 
             <div class="form-group">
                 <label>Local da Consulta:</label>
-                <select v-model="consulta.local" required>
+                <select v-model="appointmentData.local" required>
                     <option value="">Selecione uma clínica</option>
                     <option v-for="clinica in clinicas" :key="clinica.id" :value="clinica.nome">
                         {{ clinica.nome }}
@@ -20,7 +24,7 @@
 
             <div class="form-group">
                 <label>Especialidade:</label>
-                <select v-model="consulta.especialidade" required>
+                <select v-model="appointmentData.especialidade" required>
                     <option value="">Selecione uma especialidade</option>
                     <option v-for="esp in especialidades" :key="esp.id" :value="esp.tipo">
                         {{ esp.tipo }}
@@ -30,7 +34,7 @@
 
             <div class="form-group">
                 <label>Duração da Sessão:</label>
-                <select v-model="consulta.duracao" required>
+                <select v-model="appointmentData.duracao" required>
                     <option value="">Selecione a duração</option>
                     <option value="30">30 minutos</option>
                     <option value="60">1 hora</option>
@@ -40,19 +44,35 @@
             </div>
 
             <div class="botoes">
-                <button type="submit" class="btn-agendar">Agendar</button>
-                <button type="button" class="btn-cancelar" @click="voltarHome">Cancelar</button>
+                <button 
+                    type="submit" 
+                    class="btn-agendar"
+                    :disabled="loading"
+                >
+                    {{ loading ? 'Agendando...' : 'Agendar' }}
+                </button>
+                <button 
+                    type="button" 
+                    class="btn-cancelar" 
+                    @click="voltarHome"
+                    :disabled="loading"
+                >
+                    Cancelar
+                </button>
             </div>
         </form>
     </div>
 </template>
 
 <script>
+import appointmentService from '@/services/appointmentService';
+import {mapGetters} from 'vuex';
+
 export default {
     name: 'AgendarConsulta',
     data() {
         return {
-            consulta: {
+            appointmentData: {
                 dataHora: '',
                 local: '',
                 especialidade: '',
@@ -67,13 +87,44 @@ export default {
                 { id: 1, tipo: 'Terapia Tipo 1' },
                 { id: 2, tipo: 'Terapia Tipo 2' },
                 { id: 3, tipo: 'Terapia Tipo 3' }
-            ]
+            ],
+            loading: false,
+            error: null
         }
     },
+    computed: 
+    {
+        ...mapGetters(['currentUser'])
+    }, 
     methods: {
         agendarConsulta() {
-            // Aqui você implementaria a lógica para salvar a consulta
-            console.log('Consulta agendada:', this.consulta)
+            try
+            {
+                this.loading = true;
+                this.error = null;
+                const m_appointmentData = 
+                {
+                    ...this.appointmentData,
+                    userId: this.currentUser.id,
+                    duracao: parseInt(this.appointmentData.duracao)
+                };
+
+                appointmentService.createAppointment(m_appointmentData);
+
+                //show success message
+                alert('Consulta agendada com sucesso!');
+                this.router.push('/agendamentos');
+            } catch(error)
+            {
+                console.error('Erro ao agendar consulta:', error);
+                this.error = 'Por favor tentar novamente agendar consulta em alguns minutos';
+            } finally
+            {
+                this.loading = false;
+            }
+            
+
+            console.log('Consulta agendada:', this.appointmentData)
             this.voltarHome()
         },
         voltarHome() {
