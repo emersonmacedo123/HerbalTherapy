@@ -10,6 +10,7 @@
             <thead>
                 <tr>
                     <th>Data e Hora</th>
+                    <th>Cliente</th>
                     <th>Clínica</th>
                     <th>Especialidade</th>
                     <th>Duração</th>
@@ -19,11 +20,15 @@
             <tbody>
                 <tr v-for="consulta in consultas" :key="consulta.id">
                     <td>{{ formatDateTime(consulta.dataHora) }}</td>
-                    <td>{{ consulta.clinica }}</td>
+                    <td>{{ consulta.userId.fullName }}</td>
+                    <td>{{ consulta.local }}</td>
                     <td>{{ consulta.especialidade }}</td>
                     <td>{{ consulta.duracao }} minutos</td>
                     <td>
-                        <button @click="cancelarConsulta(consulta.id)" class="btn-cancelar">
+                        <button @click="concluirConsulta(consulta._id)" class="btn-concluir" style="margin-right: 10px;">
+                            Concluir
+                        </button>
+                        <button @click="cancelarConsulta(consulta._id)" class="btn-cancelar">
                             Cancelar
                         </button>
                     </td>
@@ -48,37 +53,67 @@ export default {
     },
     computed: 
     {
-        ...mapGetters(['currentUser'])
+        ...mapGetters(['currentUser', 'isAdmin'])
     },
-    async created()
-    {
-        try
-        {
-            if(this.currentUser){
-                this.consultas = await appointmentService.getUserAppointments(this.currentUser.id);
-            }
-        } catch (error)
-        {
-            console.error('Erro ao coletar consultas agendadas', error);
-            this. error = 'Erro ao coletar consultas';
+    async created() {
+    try {
+        if (this.currentUser) {
+            this.consultas = await appointmentService.getUserAppointments(
+                this.currentUser.id, 
+                this.isAdmin
+            );
         }
-        finally 
-        {
-            this.loading = false;
-        }
-    },
+    } catch (error) {
+        console.error('Erro ao coletar consultas agendadas:', error);
+        this.error = 'Erro ao coletar consultas';
+    } finally {
+        this.loading = false;
+    }
+},
     methods: {
         formatDateTime(dateTime) {
             return new Date(dateTime).toLocaleString('pt-BR')
         },
-        async cancelarConsulta(id) {
-            if (confirm('Deseja realmente cancelar esta consulta?')) {
-                try {
-                    await appointmentService.cancelAppointment(id);
-                    this.consultas = this.consultas.filter(consulta => consulta._id !== id);
+        async cancelarConsulta(appointmentId) {
+            if (confirm('Deseja realmente cancelar esta consulta?')) 
+            {
+                try 
+                {
+                    await appointmentService.cancelAppointment(
+                        appointmentId,
+                        this.currentUser.id,
+                        this.isAdmin
+                    );
+                    //refresh consultas depois de cancelar
+                    this.consultas = await appointmentService.getUserAppointments(
+                        this.currentUser.id,
+                        this.isAdm
+                    )
                 } catch (error) {
                     console.error('Erro ao cancelar consulta:', error);
                     alert('Erro ao cancelar consulta. Tente novamente.');
+                }
+            }
+        },
+        async concluirConsulta(appointmentId)
+        {
+            if (confirm('Consulta foi realmente concluida?'))
+            {
+                try
+                {
+                    await appointmentService.finishAppointment(
+                        appointmentId,
+                        this.currentUser.id,
+                        this.isAdmin
+                    );
+                    //refresh consultas depois de concluir
+                    this.consultas = await appointmentService.getUserAppointments(
+                        this.currentUser.id,
+                        this.isAdmin
+                    );
+                } catch (error) {
+                    console.error('Erro ao concluir consulta:', error);
+                    alert('Erro ao concluir consulta. Tente novamente.');
                 }
             }
         }
@@ -90,7 +125,18 @@ export default {
 .consultas-agendadas {
     padding: 20px;
 }
+.btn-concluir {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+}
 
+.btn-concluir:hover {
+    background-color: #45a049;
+}
 .consultas-table {
     width: 100%;
     border-collapse: collapse;

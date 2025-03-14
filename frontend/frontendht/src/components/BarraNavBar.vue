@@ -51,6 +51,15 @@
           <!-- Items for authenticated non-admin users -->
           <template v-if="isAuthenticated && !isAdmin">
             <li class="nav-item">
+              <router-link class="nav-link" to="/schedule">Agendar</router-link>
+            </li>
+            <li class="nav-item">
+              <router-link class="nav-link" to="/agendamentos">Agendamentos</router-link>
+            </li>
+            <li class="nav-item">
+              <router-link class="nav-link" to="/history">Historico</router-link>
+            </li>
+            <li class="nav-item">
               <router-link class="nav-link" to="/perfilcliente">Meu Perfil</router-link>
             </li>
             <li class="nav-item">

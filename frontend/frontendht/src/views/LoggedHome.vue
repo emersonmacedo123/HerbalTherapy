@@ -9,6 +9,11 @@
                 <h2>Agendar Consulta</h2>
             </div>
 
+            <div class="option-card" @click="goToAgendamentos">
+                        <i class="fas fa-calendar-alt"></i>
+                        <h2>Todos os Agendamentos</h2>
+                    </div>
+
             <div class="option-card" @click="goToHistory">
                 <i class="fas fa-history"></i>
                 <h2>Ver Consultas Anteriores</h2>

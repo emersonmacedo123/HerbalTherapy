@@ -12,23 +12,51 @@ export default {
             throw error;
         }
     },
-    async getUserAppointments(userId) {
+    async getUserAppointments(userId, isAdmin = false) {
         try {
-            const response = await axios.get(`${API_URL}/appointments/user/${userId}`);
+            const response = await axios.get(`${API_URL}/appointments/user/${userId}?isAdmin=${isAdmin}`);
             return response.data;
         } catch (error) {
-            console.error('Error getting user`s appointmens', error);
+            console.error('Error getting user appointments:', error);
             throw error;
         }
     },
 
-    async cancelAppointment(appointmentId) {
+    async cancelAppointment(appointmentId, userId, isAdmin) {
         try {
-            const response = await axios.patch(`${API_URL}/appointments/${appointmentId}/cancel`);
+            const response = await axios.patch(`${API_URL}/appointments/${appointmentId}/cancel`, {
+                userId,
+                isAdmin
+            });
             return response.data;
         } catch (error) {
             console.error('Error canceling appointment:', error);
             throw error;
         }
+    }, //cancelAppointment
+
+    async finishAppointment(appointmentId, userId, isAdmin) {
+        try {
+            const response = await axios.patch(`${API_URL}/appointments/${appointmentId}/finish`, {
+                userId,
+                isAdmin
+            });
+            return response.data;
+
+        } catch (error) {
+            console.error('Erro ao concluir consulta:', error);
+            throw error;
+        }
+    }, // finishAppointment
+    async getConsultasConcluidas(userId, isAdmin) {
+        try {
+            const response = await axios.get(`${API_URL}/appointments/finished/user/${userId}?isAdmin=${isAdmin}`);
+            return response.data;
+        } catch (error) {
+            console.error('Error getting finished appointments:', error);
+            throw error;
+        }
+
     }
+
 } //export default
