@@ -12,7 +12,10 @@ dotenv.config();
 const app = express();
 
 // Middleware
-app.use(cors());
+app.use(cors({
+    origin: ['https://your-netlify-app.netlify.app', 'http://localhost:8080'],
+    credentials: true
+}));
 app.use(express.json());
 
 // MongoDB Connection
