@@ -1,6 +1,6 @@
 <template>
     <footer class="footer">
-      Copyright &copy; 2025 Emerson Macedo. Todos os direitos reservados.
+      Copyright &copy; 2025 Emerson Macedo. Trabalho-projeto UaB - 2024/2025.
     </footer>
   </template>
   
