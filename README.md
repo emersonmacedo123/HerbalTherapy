@@ -1,56 +1,85 @@
-# HerbalTherapy
+# Universidade Aberta de Portugal UaB
+# Programação Avançada Web - 2024/25
+# HerbalTherapy - Sistema de Agendamento de Fitoterapias
 
-## Acesso ao Projeto
+## Projeto com Deploy disponível em:
+- Frontend: https://inquisitive-toffee-4c7ceb.netlify.app/ 
+- Backend: https://herbaltherapy.onrender.com/ 
 
-### Repositório GitHub
-1. Clone o repositório:
-```bash
-git clone https://github.com/seu-usuario/HerbalTherapy.git
-cd HerbalTherapy
-```
+## Contas para Teste
+1. Administrador:
+   - Email: admin@admin
+   - Senha: admin
 
-### Configuração MongoDB Atlas
-1. Já está configurado e disponível em cloud:
-   - URL: https://cloud.mongodb.com
-   - Cluster: herbaltherapy-cluster
-   - Database: herbaltherapy
+2. Usuário Regular:
+   - Email: therapy@therapy
+   - Senha: therapy
 
-2. Credenciais MongoDB Atlas:
-   - Email: professor@herbaltherapy.com
-   - Senha: PAW2025@cluster
-   
-3. String de conexão (já configurada no backend):
-```
-mongodb+srv://professor:PAW2025@herbaltherapy-cluster.mongodb.net/herbaltherapy
-```
+3. Novos usuários: 
+   - Tambem é possível adicionar novo usuário ao cadastrar.
+   - Novos usuários são por padrão usuários regulares.
+   - Somente admin pode transformá-los em admin. 
 
-### Executando o Projeto
+## Funcionalidades
+- Página inicial e lista de serviços / terapias
+- Registro e login de usuários
+- Agendamento de consultas
+- Visualização de histórico de consultas
+- Perfil do usuário editável
+- Área administrativa com:
+  - Gestão de usuários
+  - Gestão de consultas
+  - Visualização de todos os agendamentos
 
-1. Backend:
+## Tecnologias Utilizadas
+- Frontend: Vue.js 3
+- Backend: Node.js + Express
+- Banco de Dados: MongoDB Atlas
+- Deploy: Netlify (frontend) e Render (backend)
+
+## Executando Localmente (Opcional)
+
+### Pré-requisitos
+- Node.js instalado
+- NPM ou Yarn
+- Git
+
+### Backend
 ```bash
 cd backend
 npm install
 npm start
 ```
+Servidor iniciará em http://localhost:3000
 
-2. Frontend:
+### Frontend
 ```bash
 cd frontend/frontendht
 npm install
 npm run serve
 ```
+Aplicação iniciará em http://localhost:8080
 
-### Contas para Teste
-1. Administrador:
-   - Email: admin@herbaltherapy.com
-   - Senha: admin123
+# Estrutura do projeto 
+herbaltherapy/
+├── backend/
+│   ├── controllers/
+│   ├── models/
+│   ├── routes/
+│   └── server.js
+└── frontend/
+    └── frontendht/
+        ├── src/
+        │   ├── components/
+        │   ├── views/
+        │   ├── services/
+        │   └── store/
+        └── public/
 
-2. Usuário Regular:
-   - Email: user@herbaltherapy.com
-   - Senha: user123
+# Banco de dados do projeto
+É executado em MongoDb Cloud service.
 
-### Observações Importantes
-- O banco de dados já está populado com dados de teste
-- As credenciais do MongoDB Atlas são exclusivas para avaliação
-- O projeto está conectado automaticamente ao cluster na nuvem
-- Não é necessária configuração local do MongoDB
+# Autor:
+Emerson Macedo
+Estudante da Universidade Aberta de Portugal
+Programação Avançaca Web - 2024/2025. 
