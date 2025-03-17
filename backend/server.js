@@ -13,7 +13,11 @@ const app = express();
 
 // Middleware
 app.use(cors({
-    origin: ['https://inquisitive-toffee-4c7ceb.netlify.app', 'http://localhost:8080'],
+    origin: [
+        'https://inquisitive-toffee-4c7ceb.netlify.app',
+        'http://localhost:8080',
+        'https://your-netlify-app.netlify.app'
+    ],
     credentials: true
 }));
 app.use(express.json());
